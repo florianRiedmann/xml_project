@@ -1,14 +1,24 @@
+import re
 import pandas as pd
 from tables import result
 from db import connection
 
+# read the data from csv
 df = pd.read_csv("data/nr19_sprengel.csv", sep=";")
-print(df.head())
 
-l = [{'user_id': 1, 'email_address': 'jack@yahoo.com'},
-     {'user_id': 1, 'email_address': 'jack@msn.com'},
-     {'user_id': 2, 'email_address': 'www@www.org'},
-     {'user_id': 2, 'email_address': 'wendy@aol.com'}]
+# parse the data into the right structure
+l = list()
 
-ins = result.insert()
-exe = connection.execute(ins)
+for index, row in df.iterrows():
+    d = dict()
+    d["id"] = index
+    for i in range(0,21):
+        key = re.sub("[\.\s*]", "", row.index[i])
+        if key == "DISTRICT_CODE":
+            d[key] = str(row[i])
+        else:
+            d[key] = row[i]
+    l.append(d)
+
+# execute insert statement to SQL server
+exe = connection.execute(result.insert(), l)
