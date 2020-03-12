@@ -22,3 +22,4 @@ for index, row in df.iterrows():
 
 # execute insert statement to SQL server
 exe = connection.execute(result.insert(), l)
+connection.close()
