@@ -1,4 +1,4 @@
-from db import connection
+from sqlDb.db import connection
 
 # https://docs.microsoft.com/en-us/sql/relational-databases/xml/basic-syntax-of-the-for-xml-clause?view=sql-server-ver15
 

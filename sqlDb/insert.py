@@ -1,7 +1,7 @@
 import re
 import pandas as pd
-from tables import result
-from db import connection
+from sqlDb.tables import result
+from sqlDb.db import connection
 
 # read the data from csv
 df = pd.read_csv("data/nr19_sprengel.csv", sep=";")

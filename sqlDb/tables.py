@@ -1,5 +1,5 @@
 import sqlalchemy as db
-from db import engine, connection
+from sqlDb.db import engine, connection
 
 metadata = db.MetaData()
 
