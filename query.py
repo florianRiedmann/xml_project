@@ -18,6 +18,8 @@ s = "SELECT * FROM result FOR XML AUTO, ROOT('Data'), XMLSCHEMA;"
 
 resultProxy = connection.execute(s)
 rowProxy = resultProxy.fetchone()
+
+print(row_)
 rs = "".join(rowProxy)
 
 f = open("data/nr19_sprengel.xsd", "w")

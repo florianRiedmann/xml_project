@@ -1,1 +1,52 @@
-<Data><xsd:schema targetNamespace="urn:schemas-microsoft-com:sql:SqlRowSet1" xmlns:schema="urn:schemas-microsoft-com:sql:SqlRowSet1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sqltypes="http://schemas.microsoft.com/sqlserver/2004/sqltypes" elementFormDefault="qualified"><xsd:import namespace="http://schemas.microsoft.com/sqlserver/2004/sqltypes" schemaLocation="http://schemas.microsoft.com/sqlserver/2004/sqltypes/sqltypes.xsd"/><xsd:element name="result"><xsd:complexType><xsd:attribute name="id" type="sqltypes:int" use="required"/><xsd:attribute name="NUTS1"><xsd:simpleType><xsd:restriction base="sqltypes:varchar" sqltypes:localeId="1033" sqltypes:sqlCompareOptions="IgnoreCase IgnoreKanaType IgnoreWidth" sqltypes:sqlSortId="52"><xsd:maxLength value="10"/></xsd:restriction></xsd:simpleType></xsd:attribute><xsd:attribute name="NUTS2"><xsd:simpleType><xsd:restriction base="sqltypes:varchar" sqltypes:localeId="1033" sqltypes:sqlCompareOptions="IgnoreCase IgnoreKanaType IgnoreWidth" sqltypes:sqlSortId="52"><xsd:maxLength value="10"/></xsd:restriction></xsd:simpleType></xsd:attribute><xsd:attribute name="NUTS3"><xsd:simpleType><xsd:restriction base="sqltypes:varchar" sqltypes:localeId="1033" sqltypes:sqlCompareOptions="IgnoreCase IgnoreKanaType IgnoreWidth" sqltypes:sqlSortId="52"><xsd:maxLength value="10"/></xsd:restriction></xsd:simpleType></xsd:attribute><xsd:attribute name="DISTRICT_CODE"><xsd:simpleType><xsd:restriction base="sqltypes:varchar" sqltypes:localeId="1033" sqltypes:sqlCompareOptions="IgnoreCase IgnoreKanaType IgnoreWidth" sqltypes:sqlSortId="52"><xsd:maxLength value="10"/></xsd:restriction></xsd:simpleType></xsd:attribute><xsd:attribute name="T" type="sqltypes:int"/><xsd:attribute name="WV" type="sqltypes:int"/><xsd:attribute name="WK" type="sqltypes:int"/><xsd:attribute name="BZ" type="sqltypes:int"/><xsd:attribute name="SPR" type="sqltypes:int"/><xsd:attribute name="WBER" type="sqltypes:int"/><xsd:attribute name="ABG" type="sqltypes:int"/><xsd:attribute name="UNG" type="sqltype
+<Data>
+    <xsd:schema targetNamespace="urn:schemas-microsoft-com:sql:SqlRowSet1" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                xmlns:sqltypes="http://schemas.microsoft.com/sqlserver/2004/sqltypes" elementFormDefault="qualified">
+        <xsd:import namespace="http://schemas.microsoft.com/sqlserver/2004/sqltypes"
+                    schemaLocation="http://schemas.microsoft.com/sqlserver/2004/sqltypes/sqltypes.xsd"/>
+        <xsd:element name="result">
+            <xsd:complexType>
+                <xsd:attribute name="id" type="sqltypes:int" use="required"/>
+                <xsd:attribute name="NUTS1">
+                    <xsd:simpleType>
+                        <xsd:restriction base="sqltypes:varchar" sqltypes:localeId="1033"
+                                         sqltypes:sqlCompareOptions="IgnoreCase IgnoreKanaType IgnoreWidth"
+                                         sqltypes:sqlSortId="52">
+                            <xsd:maxLength value="10"/>
+                        </xsd:restriction>
+                    </xsd:simpleType>
+                </xsd:attribute>
+                <xsd:attribute name="NUTS2">
+                    <xsd:simpleType>
+                        <xsd:restriction base="sqltypes:varchar" sqltypes:localeId="1033"
+                                         sqltypes:sqlCompareOptions="IgnoreCase IgnoreKanaType IgnoreWidth"
+                                         sqltypes:sqlSortId="52">
+                            <xsd:maxLength value="10"/>
+                        </xsd:restriction>
+                    </xsd:simpleType>
+                </xsd:attribute>
+                <xsd:attribute name="NUTS3">
+                    <xsd:simpleType>
+                        <xsd:restriction base="sqltypes:varchar" sqltypes:localeId="1033"
+                                         sqltypes:sqlCompareOptions="IgnoreCase IgnoreKanaType IgnoreWidth"
+                                         sqltypes:sqlSortId="52">
+                            <xsd:maxLength value="10"/>
+                        </xsd:restriction>
+                    </xsd:simpleType>
+                </xsd:attribute>
+                <xsd:attribute name="DISTRICT_CODE">
+                    <xsd:simpleType>
+                        <xsd:restriction base="sqltypes:varchar" sqltypes:localeId="1033"
+                                         sqltypes:sqlCompareOptions="IgnoreCase IgnoreKanaType IgnoreWidth"
+                                         sqltypes:sqlSortId="52">
+                            <xsd:maxLength value="10"/>
+                        </xsd:restriction>
+                    </xsd:simpleType>
+                </xsd:attribute>
+                <xsd:attribute name="T" type="sqltypes:int"/>
+                <xsd:attribute name="WV" type="sqltypes:int"/>
+                <xsd:attribute name="WK" type="sqltypes:int"/>
+                <xsd:attribute name="BZ" type="sqltypes:int"/>
+                <xsd:attribute name="SPR" type="sqltypes:int"/>
+                <xsd:attribute name="WBER" type="sqltypes:int"/>
+                <xsd:attribute name="ABG" type="sqltypes:int"/>
+                <xsd:attribute name="UNG" type="sqltype
