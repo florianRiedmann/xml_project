@@ -20,7 +20,7 @@ resultProxy = connection.execute(s)
 rowProxy = resultProxy.fetchone()
 rs = "".join(rowProxy)
 
-f = open("data/schema.xsd", "w")
+f = open("data/nr19_sprengel.xsd", "w")
 f.write(rs)
 f.close()
 
