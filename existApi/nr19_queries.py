@@ -87,6 +87,11 @@ def relative_result_by_party_and_district(party, district):
         )
         return $abs_party_votes div $abs_participation
 '''
+
+
+
+
+
 xquery = relative_result_by_party_and_district('SPOE', 8)
 
 result = client.get(xquery)
