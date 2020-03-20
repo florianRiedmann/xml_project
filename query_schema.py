@@ -14,6 +14,6 @@ finally:
 
 xml_schema = "".join(xml_str)
 
-f = open("data/nr19_sprengel.xml", "w")
+f = open("data/nr19_sprengel_inline_schema.xml", "w")
 f.write(xml_schema)
 f.close()
