@@ -89,7 +89,35 @@ def relative_result_by_party_and_district(party, district):
 '''
 
 
+all = '''
+    let $results := doc("/db/nr19/nr19_sprengel.xml")/Data/result
+    let $parties := ('OEVP', 'SPOE', 'FPOE', 'NEOS', 'JETZT', 'GRUE', 'KPOE', 'WANDL', 'BIER')
+    let $districts := (1 to 23)
+    
+    let $results_by_district:= for $district in $districts
+    
+    let $district_results:= for $d in $results
+    where $d/BZ = $districts
+    return $d 
+    
+    (: Total votes = all votes - rejected votes:)
+    let $abs_total_votes := sum(
+        for $d in $district_results
+            return $d/ABG - $d/UNG
+    )   
 
+    (: Relative votes by Party:)
+    let $rel_votes_by_party := for $party in $parties
+        let $abs_party_votes := sum(
+            for $d in $district_results/*[local-name()=$party]
+                return $d
+        )
+        return element {$party} {format-number((xs:decimal($abs_party_votes div $abs_total_votes * 100)), '0.00')}
+        
+    return element {concat('district-',$district)} {$rel_votes_by_party}
+    
+    return $results_by_district
+'''
 
 
 xquery = relative_result_by_party_and_district('SPOE', 8)
