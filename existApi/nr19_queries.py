@@ -97,7 +97,7 @@ all = '''
     let $results_by_district:= for $district in $districts
     
     let $district_results:= for $d in $results
-    where $d/BZ = $districts
+    where $d/BZ = $district
     return $d 
     
     (: Total votes = all votes - rejected votes:)
@@ -122,7 +122,8 @@ all = '''
 
 xquery = relative_result_by_party_and_district('SPOE', 8)
 
-result = client.get(xquery)
+
+result = client.get(all)
 
 
 
