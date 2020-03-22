@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.w3.org/2001/XMLSchema"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://nr19.org/nr19_schema"
+           elementFormDefault="qualified">
+  <xs:element name="root">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="result" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" type="xs:int"></xs:element>
+              <xs:element name="NUTS1" type="xs:string"></xs:element>
+              <xs:element name="NUTS2" type="xs:string"></xs:element>
+              <xs:element name="NUTS3" type="xs:string"></xs:element>
+              <xs:element name="DISTRICT_CODE" type="xs:int"></xs:element>
+              <xs:element name="T" type="xs:int"></xs:element>
+              <xs:element name="WV" type="xs:int"></xs:element>
+              <xs:element name="WK" type="xs:int"></xs:element>
+              <xs:element name="BZ" type="xs:int"></xs:element>
+              <xs:element name="SPR" type="xs:int"></xs:element>
+              <xs:element name="WBER" type="xs:int"></xs:element>
+              <xs:element name="ABG" type="xs:int"></xs:element>
+              <xs:element name="UNG" type="xs:int"></xs:element>
+              <xs:element name="OEVP" type="xs:int"></xs:element>
+              <xs:element name="SPOE" type="xs:int"></xs:element>
+              <xs:element name="FPOE" type="xs:int"></xs:element>
+              <xs:element name="NEOS" type="xs:int"></xs:element>
+              <xs:element name="JETZT" type="xs:int"></xs:element>
+              <xs:element name="GRUE" type="xs:int"></xs:element>
+              <xs:element name="KPOE" type="xs:int"></xs:element>
+              <xs:element name="WANDL" type="xs:int"></xs:element>
+              <xs:element name="BIER" type="xs:int"></xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
