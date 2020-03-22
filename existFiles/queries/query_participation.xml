@@ -1,0 +1,26 @@
+    xquery version "3.1";
+
+    declare namespace nr19 = "http://nr19.org/nr19_schema";
+
+    let $results := doc("/db/nr19/nr19_sprengel.xml")/nr19:root/nr19:result
+    let $districts := (1 to 23)
+
+    
+    let $results_by_district:= for $district in $districts
+    
+    let $district_results:= for $d in $results
+    where $d/nr19:BZ = $district
+    return $d
+    
+    let $votes := sum(
+        for $d in $district_results
+            return $d/nr19:ABG
+    )
+    
+    let $voters := sum(
+        for $d in $district_results
+            return $d/nr19:WBER
+    )
+    
+    return element {concat('district-',$district)} {format-number((xs:decimal($votes div $voters * 100)), '0.00')}
+    return $results_by_district
