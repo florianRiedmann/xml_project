@@ -1,10 +1,23 @@
-from db import connection
+from sqlDb.engine import engine
 
-# https://docs.microsoft.com/en-us/sql/relational-databases/xml/basic-syntax-of-the-for-xml-clause?view=sql-server-ver15
+stmt = """DECLARE @header VARCHAR(50);
+DECLARE @namespace VARCHAR(50);
+DECLARE @x XML
 
-# Query for Data
+SET @header = '<?xml version="1.0" encoding="UTF-8"?>';
+SET @namespace = '<root xmlns="http://nr19.org/nr19_schema">';
+SET @x = (
+SELECT *
+FROM result
+FOR XML PATH ('result'), ROOT ('root'))
+
+SELECT CAST(CONCAT(@header, REPLACE(CAST(@x AS NVARCHAR(MAX)), '<root>', @namespace)) AS NTEXT);"""
+
+# raw DBAPI connection
 try:
-    result = connection.execute('SELECT * FROM result FOR XML AUTO, ELEMENTS, ROOT')
+    connection = engine.raw_connection()
+    cursor = connection.cursor()
+    result = cursor.execute(stmt)
 
     xml_str = list()
 
@@ -12,10 +25,12 @@ try:
         xml_str.append(row[0])
 
 finally:
-    connection.close()
+    cursor.close()
 
+# concat row strings
 xml_file = "".join(xml_str)
 
+# save query to a file
 f = open("data/nr19_sprengel.xml", "w")
 f.write(xml_file)
 f.close()

@@ -1,5 +1,5 @@
 import sqlalchemy as db
-from sqlDb.db import engine, connection
+from sqlDb.engine import engine
 
 metadata = db.MetaData()
 
@@ -7,7 +7,7 @@ result = db.Table("result", metadata, db.Column("id", db.Integer, primary_key=Tr
                   db.Column("NUTS1", db.String(10)),
                   db.Column("NUTS2", db.String(10)),
                   db.Column("NUTS3", db.String(10)),
-                  db.Column("DISTRICT_CODE", db.String(10)),
+                  db.Column("DISTRICT_CODE", db.Integer),
                   db.Column("T", db.Integer),
                   db.Column("WV", db.Integer),
                   db.Column("WK", db.Integer),
@@ -26,5 +26,4 @@ result = db.Table("result", metadata, db.Column("id", db.Integer, primary_key=Tr
                   db.Column("WANDL", db.Integer),
                   db.Column("BIER", db.Integer))
 
-metadata.create_all(engine)
-connection.close()
+result.create(engine)
