@@ -1,8 +1,4 @@
-from existApi.ExistApiClient import ExistClient
-import existApi.config as config
-
-
-client = ExistClient()
+import xml_project.existDB.config as config
 
 
 def absolut_votes_by_party_and_district(party, district):
@@ -18,6 +14,7 @@ def absolut_votes_by_party_and_district(party, district):
             return $x/{party}
         )
     '''
+
 
 def relative_result_by_party_and_district(party, district):
     return f'''
@@ -163,10 +160,3 @@ winner = '''
     
     return $results_by_district
 '''
-
-
-result = client.get(relative_result_by_party_and_district('GRUE', 8))
-
-
-
-print(result[0])
