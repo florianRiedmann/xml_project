@@ -5,7 +5,8 @@ from xml_project.sqlDB.engine import engine
 from xml_project.sqlDB.tables import result
 from xml_project.sqlDB.xml import get_xml_file
 from xml_project.existDB.exist import ExistClient
-from xml_project.existDB.queries import relative_result_by_party_and_district
+from xml_project.existDB.queries import winner, participation
+from sqlalchemy.exc import SQLAlchemyError
 
 
 def main():
@@ -21,33 +22,51 @@ def main():
         print(f"{file_name} does not exist!")
 
     # create table
+    print("CREATE TABLE")
     try:
         result.create(engine)
-    except Exception as e:
-        print(e.args)
+    except SQLAlchemyError as e:
+        print("Error: There is already an object named 'result'!")
 
+    print("INSERT INTO")
     # insert statement
     try:
         with engine.connect() as connection:
             connection.execute(result.insert(), data)
-    except Exception as e:
-        print(e.args)
+    except SQLAlchemyError:
+        print("Error: Cannot insert duplicate key in object!")
 
     # query xml from database and export
     xml_file_name = XML_FILE_NAME
     get_xml_file(os.path.join(project_path, "data", xml_file_name))
 
 
-def query_exist_db():
+def query_winner_nr19():
     # query from existDB
     try:
         client = ExistClient()
-        rs = client.get(relative_result_by_party_and_district('GRUE', 8))
-        return rs[0]
+        rs = client.get(winner)
+        return rs
     except Exception as e:
+        print("SQL Database Error:")
+        print(e.args)
+
+
+def query_part_nr19():
+    # query from existDB
+    try:
+        client = ExistClient()
+        rs = client.get(participation)
+        return rs
+    except Exception as e:
+        print("SQL Database Error:")
         print(e.args)
 
 
 if __name__ == "__main__":
     main()
-    query_exist_db()
+    print("\nDistrict Winner: ")
+    [print(i) for i in query_winner_nr19()]
+    print("\nDistrict Voter Participation: ")
+    [print(i) for i in query_part_nr19()]
+
