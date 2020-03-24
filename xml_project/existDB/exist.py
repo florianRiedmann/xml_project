@@ -11,7 +11,8 @@ class ExistClient:
         try:
             resultId = self.db.executeQuery(query)
             hits = self.db.getHits(resultId)
-            return [self.db.retrieve(resultId, x) for x in range(hits)]
+            return [self.db.retrieve(resultId, x).data.decode('utf-8') for x in range(hits)]
 
         except db.ExistDBException as e:
-            raise e
+            print("Exist Database Error:")
+            print(e.args)

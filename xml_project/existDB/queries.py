@@ -3,7 +3,7 @@ import xml_project.existDB.config as config
 
 def absolut_votes_by_party_and_district(party, district):
     return f'''
-        declare namespace nr19 = "http://nr19.org/nr19_schema";
+        declare namespace nr19 = "{config.NR19_NAMESPACE}";
 
         let $results:=doc("{config.EXIST_DOCUMENT}")/nr19:root/nr19:result
         let $district:= for $d in $results
@@ -11,35 +11,36 @@ def absolut_votes_by_party_and_district(party, district):
         return $d
         let $abs_party_votes:= sum(
             for $x in $district
-            return $x/{party}
+            return $x/nr19:{party}
         )
+        return $abs_party_votes
     '''
 
 
 def relative_result_by_party_and_district(party, district):
     return f'''
-        declare namespace nr19 = "http://nr19.org/nr19_schema";
+        declare namespace nr19 = "{config.NR19_NAMESPACE}";
 
-        let $results:= doc("{config.EXIST_DOCUMENT}")/nr19:root/nr19:result
+        let $results:=doc("{config.EXIST_DOCUMENT}")/nr19:root/nr19:result
         let $district:= for $d in $results
         where $d/nr19:BZ = {district}
         return $d
         let $abs_party_votes:= sum(
             for $x in $district
-            return $x/{party}
+            return $x/nr19:{party}
         )
        let $abs_participation:= sum(
             for $x in $district
             return $x/nr19:ABG - $x/nr19:UNG
         )
-        return $abs_party_votes div $abs_participation
+        return format-number((xs:decimal($abs_party_votes div $abs_participation * 100)), '0.00')
 '''
 
 
-relative_results_all = '''
-    declare namespace nr19 = "http://nr19.org/nr19_schema";
+relative_results_ordered_by_party = f'''
+    declare namespace nr19 = "{config.NR19_NAMESPACE}";
 
-    let $results := doc("/db/nr19/nr19_sprengel.xml")/nr19:root/nr19:result
+    let $results:=doc("{config.EXIST_DOCUMENT}")/nr19:root/nr19:result
     let $parties := ('OEVP', 'SPOE', 'FPOE', 'NEOS', 'JETZT', 'GRUE', 'KPOE', 'WANDL', 'BIER')
     let $districts := (1 to 23)
 
@@ -61,17 +62,17 @@ relative_results_all = '''
                 for $d in $district_results/*[local-name()=$party]
                 return $d
             )
-            return element {$party} {format-number((xs:decimal($abs_party_votes div $abs_total_votes * 100)), '0.00')}
+            return element {{$party}} {{format-number((xs:decimal($abs_party_votes div $abs_total_votes * 100)), '0.00')}}
     
-        return element {concat('district-',$district)} {$rel_votes_by_party}
+        return <result district="{{$district}}">  {{$rel_votes_by_party}} </result>
     
     return $results_by_district
 '''
 
-relative_results_all_sorted = '''
-    declare namespace nr19 = "http://nr19.org/nr19_schema";
+relative_results_ordered_by_result = f'''
+    declare namespace nr19 = "{config.NR19_NAMESPACE}";
 
-    let $results := doc("/db/nr19/nr19_sprengel.xml")/nr19:root/nr19:result
+    let $results:=doc("{config.EXIST_DOCUMENT}")/nr19:root/nr19:result
     let $parties := ('OEVP', 'SPOE', 'FPOE', 'NEOS', 'JETZT', 'GRUE', 'KPOE', 'WANDL', 'BIER')
     let $districts := (1 to 23)
 
@@ -93,18 +94,18 @@ relative_results_all_sorted = '''
                 for $d in $district_results/*[local-name()=$party]
                 return $d
             )
-            return element {$party} {format-number((xs:decimal($abs_party_votes div $abs_total_votes * 100)), '0.00')}
+            return element {{$party}} {{format-number((xs:decimal($abs_party_votes div $abs_total_votes * 100)), '0.00')}}
         
         let $rel_sorted:= for $x in $rel_votes_by_party order by xs:decimal($x/data()) descending return $x
-        return element {concat('district-',$district)} {$rel_sorted}
-    
+        return <result district="{{$district}}">  {{$rel_sorted}} </result>
+   
     return $results_by_district
 '''
 
-participation = '''
-    declare namespace nr19 = "http://nr19.org/nr19_schema";
+participation = f'''
+    declare namespace nr19 = "{config.NR19_NAMESPACE}";
 
-    let $results := doc("/db/nr19/nr19_sprengel.xml")/nr19:root/nr19:result
+    let $results:=doc("{config.EXIST_DOCUMENT}")/nr19:root/nr19:result
     let $districts := (1 to 23)
 
     
@@ -124,14 +125,15 @@ participation = '''
             return $d/nr19:WBER
     )
     
-    return element {concat('district-',$district)} {format-number((xs:decimal($votes div $voters * 100)), '0.00')}
+    return <result district="{{$district}}"> {{format-number((xs:decimal($votes div $voters * 100)), '0.00')}} </result>
+
     return $results_by_district
 '''
 
-winner = '''
-    declare namespace nr19 = "http://nr19.org/nr19_schema";
+winner = f'''
+    declare namespace nr19 = "{config.NR19_NAMESPACE}";
 
-    let $results := doc("/db/nr19/nr19_sprengel.xml")/nr19:root/nr19:result
+    let $results:=doc("{config.EXIST_DOCUMENT}")/nr19:root/nr19:result
     let $parties := ('OEVP', 'SPOE', 'FPOE', 'NEOS', 'JETZT', 'GRUE', 'KPOE', 'WANDL', 'BIER')
     let $districts := (1 to 23)
 
@@ -153,10 +155,11 @@ winner = '''
                 for $d in $district_results/*[local-name()=$party]
                 return $d
             )
-            return element {$party} {format-number((xs:decimal($abs_party_votes div $abs_total_votes * 100)), '0.00')}
+            return element {{$party}} {{format-number((xs:decimal($abs_party_votes div $abs_total_votes * 100)), '0.00')}}
         
         let $rel_sorted:= for $x in $rel_votes_by_party order by xs:decimal($x/data()) descending return $x
-        return element {concat('district-',$district)} {$rel_sorted[1]/name()}
+        
+        return <result district="{{$district}}"> {{$rel_sorted[1]/name()}} </result>
     
     return $results_by_district
 '''
