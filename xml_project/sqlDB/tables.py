@@ -1,5 +1,4 @@
 import sqlalchemy as db
-from sqlDb.engine import engine
 
 metadata = db.MetaData()
 
@@ -26,4 +25,3 @@ result = db.Table("result", metadata, db.Column("id", db.Integer, primary_key=Tr
                   db.Column("WANDL", db.Integer),
                   db.Column("BIER", db.Integer))
 
-result.create(engine)

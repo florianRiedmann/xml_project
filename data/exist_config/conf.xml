@@ -263,7 +263,7 @@
                 Configure the query pool.
                 
                 - max-stack-size:                                                        
-                    maximum number of queries in the query-pool.                         
+                    maximum number of exist_config in the query-pool.
                                                                                          
                 - size:                                                                  
                     number of copies of the same query kept in the query-pool.           
@@ -349,7 +349,7 @@
         <!--
             This is the global configuration for the query watchdog. The 
             watchdog monitors all query processes, and can terminate any 
-            long-running queries if they exceed one of the predefined limits. 
+            long-running exist_config if they exceed one of the predefined limits.
             These limits are as follows:
             
             - output-size-limit:
@@ -358,7 +358,7 @@
                 query is allowed to use. This limit is expressed as the maximum
                 number of nodes allowed for an in-memory DOM tree. The purpose
                 of this option is to avoid memory shortages on the server in
-                cases where users are allowed to run queries that produce very
+                cases where users are allowed to run exist_config that produce very
                 large output fragments.
             
             - query-timeout:
@@ -878,7 +878,7 @@
                 Set to "yes" to disable deprecated functions
             - enable-query-rewriting:
                 Set to "yes" to enable the new query-rewriting optimizer. This 
-                is work in progress and may lead to incorrect queries. Use at your
+                is work in progress and may lead to incorrect exist_config. Use at your
                 own risk.
             -  backwardCompatible:
                 Set to "yes" to enable backward compatibility (untyped argument 
